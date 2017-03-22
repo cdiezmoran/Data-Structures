@@ -10,7 +10,15 @@ def decode(str_num, base):
     base -- base of given number
     """
     assert 2 <= base <= 36
-    # TODO: Decode number
+
+    #decimal = 0
+    #for i in xrange(len(str_num)):
+    #    power = len(str_num) - 1 - i
+    #    decimal += int(str_num[i], base) * (base ** power)
+
+    decimal = int(str_num, base)
+
+    return decimal
 
 def encode(num, base):
     """
@@ -19,7 +27,18 @@ def encode(num, base):
     base -- base to convert to
     """
     assert 2 <= base <= 36
-    # TODO: Encode number
+    encoded = []
+    while num is not 0:
+        remainder = num % base
+
+        char_num = str(num % base)
+        if remainder >= 10:
+            char_num = chr(remainder + 87)
+
+        encoded.insert(0, char_num)
+        num = int(num / base)
+
+    return "".join(encoded)
 
 def convert(str_num, base1, base2):
     """
@@ -27,7 +46,8 @@ def convert(str_num, base1, base2):
     """
     assert 2 <= base1 <= 36
     assert 2 <= base2 <= 36
-    # TODO: Convert number
+    decoded_num = decode(str_num, base1)
+    return encode(decoded_num, base2)
 
 
 def main():
