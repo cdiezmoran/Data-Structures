@@ -39,15 +39,32 @@ def recursive_binary_search(item, lst, carry=0):
 
     return False
 
+def iterative_binary_search(item, lst):
+    carry = 0
+    while len(lst) != 2:
+        mid_i = len(lst) / 2
+        if lst[mid_i] == item:
+            return mid_i + carry
+
+        if item < lst[mid_i]:
+            lst = lst[:mid_i]
+        elif item > lst[mid_i]:
+            carry += mid_i
+            lst = lst[mid_i:]
+
+    return False
+
 def main():
     num = int(sys.argv[1])
     print "Factorial:", iterative_factorial(num)
 
-    arr = [0, 3, 5, 6, 8, 2, 1, 7, 4]
+    arr = [0, 8, 2, 1, 7, 4]
     print "Recursive Linear Search:", recursive_linear_search(num, arr)
 
     arr.sort()
     print "Recursive Binary Search", recursive_binary_search(num, arr)
+
+    print "Iterative Binary Search", iterative_binary_search(num, arr)
 
 if __name__ == '__main__':
     main()
