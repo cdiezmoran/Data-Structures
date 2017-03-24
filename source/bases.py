@@ -16,9 +16,7 @@ def decode(str_num, base):
     #    power = len(str_num) - 1 - i
     #    decimal += int(str_num[i], base) * (base ** power)
 
-    decimal = int(str_num, base)
-
-    return decimal
+    return int(str_num, base)
 
 def encode(num, base):
     """
@@ -31,7 +29,7 @@ def encode(num, base):
     while num is not 0:
         remainder = num % base
 
-        char_num = str(num % base)
+        char_num = str(remainder)
         if remainder >= 10:
             char_num = chr(remainder + 87)
 
