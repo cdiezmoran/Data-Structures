@@ -55,6 +55,7 @@ class TestPalindromes(unittest.TestCase):
         assert is_palindrome('doge') is False
         assert is_palindrome('monkey') is False
         assert is_palindrome('chicken, monkey!') is False
+        assert is_palindrome('AABCA') is False
 
 
 if __name__ == '__main__':

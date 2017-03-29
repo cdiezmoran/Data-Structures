@@ -11,7 +11,7 @@ def is_palindrome(text):
     # implement is_palindrome_iterative and is_palindrome_recursive below, then
     # change this to call your implementation to verify it passes all tests
     assert isinstance(text, str)
-    return is_palindrome_recursive(text)
+    return is_palindrome_iterative(text)
     # return is_palindrome_recursive(text)
 
 # This function looks for pairs of letters and if those pairs count are equal
@@ -19,7 +19,16 @@ def is_palindrome(text):
 def is_palindrome_iterative(text):
     # Remove spaces and special characters
     text = re.sub('[^A-Za-z0-9]+', '', text.lower())
-    return text == text[::-1]
+    left = 0
+    right = len(text) - 1
+
+    while left < right:
+        if text[left] != text[right]:
+            return False
+        left += 1
+        right -= 1
+
+    return True
 
 def is_perm_palindrome_iterative(text):
     text = re.sub('[^A-Za-z0-9]+', '', text.lower())
@@ -57,7 +66,7 @@ def is_perm_palindrome_iterative(text):
     return (half_len + 1) == len(unique_letters)
 
 def is_palindrome_recursive(text, left=None, right=None):
-    # TODO: implement the is_palindrome function recursively here
+    # First iteration
     if left is None and right is None:
         text = re.sub('[^A-Za-z0-9]+', '', text.lower())
         left = 0
@@ -65,7 +74,7 @@ def is_palindrome_recursive(text, left=None, right=None):
 
     if left >= right:
         return True
-
+        
     if text[left] == text[right]:
         return is_palindrome_recursive(text, (left + 1), (right - 1))
 
