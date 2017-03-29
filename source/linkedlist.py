@@ -75,6 +75,14 @@ class LinkedList(object):
         if not (0 <= index < self.size):
             raise ValueError('List index out of range: {}'.format(index))
         # TODO: Find the node at the given index and return the node's data
+        current = self.head
+        count = 0
+
+        while count != index:
+            current = current.next
+            count += 1
+
+        return current.data
 
     def insert_at_index(self, index, item):
         """Insert the given item at the given index in this linked list, or
@@ -83,6 +91,31 @@ class LinkedList(object):
         if not (0 <= index <= self.size):
             raise ValueError('List index out of range: {}'.format(index))
         # TODO: Find the node before the given index and insert the item after
+        new_node = Node(item)
+
+        self.size += 1
+
+        if self.is_empty():
+            self.head = new_node
+            self.tail = new_node
+            return
+
+        current = self.head
+        previous = None
+        count = 0
+
+        while count != index:
+            previous = current
+            current = current.next
+            count += 1
+
+        new_node.next = current
+        if previous is None:
+            self.head = new_node
+        else:
+            previous.next = new_node
+            if previous is self.tail:
+                self.tail = new_node
 
     def append(self, item):
         """Insert the given item at the tail of this linked list"""
@@ -98,6 +131,8 @@ class LinkedList(object):
         # Update tail to new node regardless
         self.tail = new_node
 
+        self.size += 1
+
     def prepend(self, item):
         """Insert the given item at the head of this linked list"""
         # Create a new node to hold the given item
@@ -111,6 +146,8 @@ class LinkedList(object):
             new_node.next = self.head
         # Update head to new node regardless
         self.head = new_node
+
+        self.size += 1
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError"""
@@ -152,6 +189,7 @@ class LinkedList(object):
                     previous.next = None
                 # Update tail to the previous node regardless
                 self.tail = previous
+            self.size -= 1
         else:
             # Otherwise raise an error to tell the user that delete has failed
             raise ValueError('Item not found: {}'.format(item))
