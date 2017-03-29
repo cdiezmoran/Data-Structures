@@ -40,11 +40,12 @@ def binary_search(array, item):
 def binary_search_iterative(array, item):
     # TODO: implement binary search iteratively here
     check_i = len(array) / 2
-    prev_check = 0
+    count = 0
     offset_left = 0
     offset_right = 0
+    first_right = False
 
-    while (check_i - offset_right != 1) and (check_i - offset_left != 1):
+    while (check_i - offset_right != 1) and (check_i - offset_left != 1) and ((len(array) - 1) - check_i != 1):
         if item == array[check_i]:
             return check_i
 
@@ -52,9 +53,13 @@ def binary_search_iterative(array, item):
             offset_right += check_i
             check_i = (check_i - offset_left) / 2 + offset_left
         elif item > array[check_i]:
+            if count == 0:
+                first_right = True
             offset_left += check_i - offset_left
             check_i += check_i / 2
-            check_i -= offset_right
+            if first_right:
+                check_i -= offset_right
+        count += 1
 
     if item == array[check_i]:
         return check_i
