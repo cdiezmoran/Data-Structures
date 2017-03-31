@@ -21,9 +21,7 @@ class LinkedQueue(object):
 
     def is_empty(self):
         """Return True if this queue is empty, or False otherwise"""
-        if self.list.head is None:
-            return True
-        return False
+        return self.list.is_empty()
 
     def length(self):
         """Return the number of items in this queue"""
@@ -103,5 +101,5 @@ class ArrayQueue(object):
 
 # implement LinkedQueue and ArrayQueue above, then change the assignment below
 # to use each of your Queue implementations to verify they each pass all tests
-#Queue = LinkedQueue
-Queue = ArrayQueue
+Queue = LinkedQueue
+#Queue = ArrayQueue
