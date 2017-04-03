@@ -38,15 +38,12 @@ class HashTable(object):
         # Option to reduce size if buckets are sparsely filled (low load factor)
         elif new_size is 0:
             new_size = self.size / 2  # Half size
-        # TODO: Get a list to temporarily hold all current key-value entries
-        temp_list = []
-        for bucket in self.buckets:
-            for key, value in bucket.items():
-                temp_list.append((key, value))
-        # TODO: Create a new list of new_size total empty linked list buckets
+        # Get a list to temporarily hold all current key-value entries
+        temp_list = self.items()
+        # Create a new list of new_size total empty linked list buckets
         self.buckets = [LinkedList() for i in range(new_size)]
         self.size = 0
-        # TODO: Insert each key-value entry into the new list of buckets,
+        # Insert each key-value entry into the new list of buckets,
         for tup in temp_list:
             self.set(tup[0], tup[1])
 
@@ -122,11 +119,11 @@ class HashTable(object):
             # In this case, the given key's value is being updated
             # Remove the old key-value entry from the bucket first
             bucket.delete(entry)
-            self.size -= 1
+        else:
+            self.size += 1
         # Insert the new key-value entry into the bucket in either case
         bucket.append((key, value))
-        self.size += 1
-        # TODO: Check if the load factor exceeds a threshold such as 0.75
+        # Check if the load factor exceeds a threshold such as 0.75
         if self.load_factor() > 0.75:
             self._resize()
 
