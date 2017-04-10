@@ -26,21 +26,73 @@ class BinarySearchTree(object):
         self.root = None
         self.size = 0
         if iterable:
-            self._insert_initial(iterable)
+            for item in iterable:
+                self.insert(item)
 
-    def _insert_initial(self, iterable):
+
+    """def _insert_initial(self, iterable):
+        iterable.sort()
         mid_i = len(iterable) / 2
-        left_i = mid_i - 1
-        right_i = mid_i + 1
+
         self.insert(iterable[mid_i])
 
-        for i in xrange(mid_i):
-            left_i -= i
-            right_i += i
-            if left_i >= 0:
-                self.insert(iterable[left_i])
-            if right_i < len(iterable):
-                self.insert(iterable[right_i])
+        count = 1
+        offset_left = mid_i
+        offset_right = 0
+
+        while count < len(iterable):"""
+
+    def _find_node(self, item):
+        """Return the node containing the given item in this binary search tree,
+        or None if the given item is not found"""
+        # Start with the root node
+        node = self.root
+        # Loop until we descend past the closest leaf node
+        while node is not None:
+            # Check if the given item matches the node's data
+            if item == node.data:
+                # Return the found node
+                return node
+            # Check if the given item is less than the node's data
+            elif item < node.data:
+                # Descend to the node's left child
+                node = node.left
+            # Check if the given item is greater than the node's data
+            elif item > node.data:
+                # Descend to the node's right child
+                node = node.right
+        # Not found
+        return None
+
+    def _find_parent_node(self, item):
+        """Return the parent node of where the given item is (or would be) in
+        this binary search tree, or None if this tree has only a root node"""
+        # Start with the root node and keep track of its parent
+        node = self.root
+        parent = None
+        # Loop until we descend past the closest leaf node
+        while node is not None:
+            # Check if the given item matches the node's data
+            if item == node.data:
+                # Return the parent of the found node
+                return parent
+            # Check if the given item is less than the node's data
+            elif item < node.data:
+                # Update the parent and descend to the node's left child
+                parent = node
+                node = node.left
+            # Check if the given item is greater than the node's data
+            elif item > node.data:
+                # Update the parent and descend to the node's right child
+                parent = node
+                node = node.right
+        # Not found
+        return parent
+
+    def is_empty(self):
+        if self.root is None:
+            return True
+        return False
 
     def insert(self, data, current=None):
         if self.root is None:
@@ -67,7 +119,61 @@ class BinarySearchTree(object):
         return
 
     def search(self, data, current=None):
-        pass
+        if self.is_empty():
+            return None
+
+        if current is None:
+            current = self.root
+
+        if data == current.data:
+            return data
+
+        if current.is_leaf():
+            return None
+
+        if data < current.data:
+            return self.search(data, current.left)
+        elif data >= current.data:
+            return self.search(data, current.right)
+
 
     def delete(self, data):
-        pass
+        node = self._find_node(data)
+
+        if node is None:
+            raise ValueError('Data given is not in the tree')
+
+        parent = self._find_parent_node(data)
+
+        is_left_node = False
+        if parent.left.data == data:
+            is_left_node = True
+
+        if node.is_leaf():
+            if parent.left.data == data:
+                parent.left = None
+            elif parent.right.data == data:
+                parent.right = None
+        else :
+            replace_node = node.right
+            cutoff_node = node.left
+            if replace_node is None:
+                replace_node = node.left
+                cutoff_node = node.right
+
+            if self.root == node:
+                self.root = replace_node
+            else :
+                if is_left_node:
+                    parent.left = replace_node
+                else :
+                    parent.right = replace_node
+
+            if cutoff_node is not None:
+                new_parent = self._find_parent_node(cutoff_node)
+                if new_parent.left is None:
+                    new_parent.left = cutoff_node
+                else:
+                    new_parent.right = cutoff_node
+
+        self.size -= 1
