@@ -1,5 +1,7 @@
 #!python
 
+from binarysearchtree import BinarySearchTree
+
 def bubble_sort(elements):
     for i in xrange(len(elements) - 1):
         for j in xrange(len(elements) - 1):
@@ -13,7 +15,7 @@ def selection_sort(elements):
     for i in xrange(len(elements)):
         min_item = elements[swap_i]
         min_i = swap_i
-        
+
         for j in xrange(swap_i, len(elements)):
             if elements[j] < min_item:
                 min_item = elements[j]
@@ -37,6 +39,10 @@ def insertion_sort(elements):
         elements[pos] = current
     return elements
 
+def tree_sort(elements):
+    bst = BinarySearchTree(elements)
+    return bst.items_in_order()
+
 def main():
     elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
     bubble = bubble_sort(elements)
@@ -49,6 +55,10 @@ def main():
     elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
     insertion = insertion_sort(elements)
     print insertion
+
+    elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
+    tree_list = tree_sort(elements)
+    print tree_list
 
 if __name__ == '__main__':
     main()
