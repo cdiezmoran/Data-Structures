@@ -3,10 +3,13 @@
 from binarysearchtree import BinarySearchTree
 
 def bubble_sort(elements):
-    for i in xrange(len(elements) - 1):
-        for j in xrange(len(elements) - 1):
-            if elements[j] > elements[j+1]:
-                elements[j], elements[j+1] = elements[j+1], elements[j]
+    swap = True
+    while swap:
+        swap = False
+        for i in xrange(len(elements) - 1):
+            if elements[i] > elements[i+1]:
+                elements[i], elements[i+1] = elements[i+1], elements[i]
+                swap = True
     return elements
 
 def cocktail_shaker_sort(elements):
