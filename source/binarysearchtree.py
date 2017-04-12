@@ -243,9 +243,9 @@ class BinarySearchTree(object):
         self.size -= 1
 
     def delete_leaf(self, data, parent):
-        if parent.data < data:
+        if parent.left.data == data:
             parent.left = None
-        else:
+        elif parent.right.data == data:
             parent.right = None
 
     def delete_with_one_child(self, node, parent):
@@ -255,9 +255,9 @@ class BinarySearchTree(object):
         else:
             child = node.right
 
-        if parent.data < data:
+        if parent.left.data == node.data:
             parent.left = child
-        else:
+        elif parent.right.data == node.data:
             parent.right = child
 
     def delete_with_two_children(self, node):
@@ -275,7 +275,7 @@ class BinarySearchTree(object):
         # Remove next in order node
         if replace_node.is_leaf():
             # No children
-            self.delete_leaf(data, replace_parent)
+            self.delete_leaf(node.data, replace_parent)
         elif replace_node.left is not None and replace_node.right is not None:
             # two children
             self.delete_with_two_children(replace_node)
