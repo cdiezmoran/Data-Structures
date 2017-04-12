@@ -9,6 +9,25 @@ def bubble_sort(elements):
                 elements[j], elements[j+1] = elements[j+1], elements[j]
     return elements
 
+def cocktail_shaker_sort(elements):
+    did_swap = True
+
+    while did_swap:
+        did_swap = False
+        for i in xrange(len(elements) - 2):
+            if elements[i] > elements[i+1]:
+                elements[i], elements[i+1] = elements[i+1], elements[i]
+                did_swap = True
+
+        if did_swap is False:
+            break
+        did_swap = False
+        for i in xrange(len(elements) - 2, 0, -1):
+            if elements[i] > elements[i+1]:
+                elements[i], elements[i+1] = elements[i+1], elements[i]
+                did_swap = True
+    return elements
+
 def selection_sort(elements):
     swap_i = 0
 
@@ -59,6 +78,10 @@ def main():
     elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
     tree_list = tree_sort(elements)
     print tree_list
+
+    elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
+    cocktail = cocktail_shaker_sort(elements)
+    print cocktail
 
 if __name__ == '__main__':
     main()
