@@ -178,6 +178,22 @@ class TestBinarySearchTree(unittest.TestCase):
         bst = BinarySearchTree(items)
         assert bst.items_level_order() == [4, 2, 6, 1, 3, 5, 7]
 
+    def test_delete(self):
+        items = [4, 2, 6, 1, 3, 5, 7]
+        bst = BinarySearchTree(items)
+        bst.delete(1)
+        assert bst.size == 6
+        assert bst.root.left.left == None
+        bst.delete(2)
+        assert bst.size == 5
+        assert bst.root.left.data == 3
+
+        bst2 = BinarySearchTree(items)
+        bst2.delete(4)
+        assert bst2.size == 6
+        assert bst2.root.data == 3
+        assert bst2.root.left.right == None
+
 
 if __name__ == '__main__':
     unittest.main()

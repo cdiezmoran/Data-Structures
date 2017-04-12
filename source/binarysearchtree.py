@@ -16,20 +16,20 @@ class BinaryNode(object):
 
     def is_leaf(self):
         """Return True if this node is a leaf (has no children)"""
-        # TODO: Check if both left child and right child have no value
+        # Check if both left child and right child have no value
         return self.left is None and self.right is None
 
     def is_internal(self):
         """Return True if this node is internal (has at least one child)"""
-        # TODO: Check if either left child or right child has a value
+        # Check if either left child or right child has a value
         return self.left is not None or self.right is not None
 
     def height(self):
         """Return the number of edges on the longest downward path from this
         node to a descendant leaf node"""
-        # TODO: Check if left child has a value and if so calculate its height
+        # Check if left child has a value and if so calculate its height
         left_height = self.left.height() if self.left is not None else -1
-        # TODO: Check if right child has a value and if so calculate its height
+        # Check if right child has a value and if so calculate its height
         right_height = self.right.height() if self.right is not None else -1
         # Return one more than the greater of the left height and right height
         return 1 + max(left_height, right_height)
@@ -125,22 +125,22 @@ class BinarySearchTree(object):
         # Handle the case where the tree is empty
         if self.is_empty():
         # if self.root is None:
-            # TODO: Create a new root node
+            # Create a new root node
             self.root = BinaryNode(item)
-            # TODO: Increase the tree size
+            # Increase the tree size
             self.size += 1
             return
         # Find the parent node of where the given item should be inserted
         parent = self._find_parent_node(item)
-        # TODO: Check if the given item should be inserted left of the parent node
+        # Check if the given item should be inserted left of the parent node
         if item < parent.data:
-            # TODO: Create a new node and set the parent's left child
+            # Create a new node and set the parent's left child
             parent.left = BinaryNode(item)
-        # TODO: Check if the given item should be inserted right of the parent node
+        # Check if the given item should be inserted right of the parent node
         elif item > parent.data:
-            # TODO: Create a new node and set the parent's right child
+            # Create a new node and set the parent's right child
             parent.right = BinaryNode(item)
-        # TODO: Increase the tree size
+        # Increase the tree size
         self.size += 1
 
     def items_in_order(self, node=None, items=None):
@@ -203,7 +203,7 @@ class BinarySearchTree(object):
     def items_level_order(self):
         """Return a list of all items in this binary search tree found using
         level-order traversal"""
-        # TODO: Create a queue to store nodes not yet traversed in level-order
+        # Create a queue to store nodes not yet traversed in level-order
         queue = LinkedQueue()
         # Create an items list
         items = list()
@@ -222,6 +222,66 @@ class BinarySearchTree(object):
                 queue.enqueue(node.right)
         # Return the items list
         return items
+
+    def delete(self, data):
+        node = self._find_node(data)
+
+        if node is None:
+            raise ValueError('Data given is not in the tree')
+
+        parent = self._find_parent_node(data)
+
+        if node.is_leaf():
+            # No children
+            self.delete_leaf(data, parent)
+        elif node.left is not None and node.right is not None:
+            # two children
+            self.delete_with_two_children(node)
+        else:
+            # one child
+            self.delete_with_one_child(node, parent)
+        self.size -= 1
+
+    def delete_leaf(self, data, parent):
+        if parent.data < data:
+            parent.left = None
+        else:
+            parent.right = None
+
+    def delete_with_one_child(self, node, parent):
+        child = None
+        if node.left is not None:
+            child = node.left
+        else:
+            child = node.right
+
+        if parent.data < data:
+            parent.left = child
+        else:
+            parent.right = child
+
+    def delete_with_two_children(self, node):
+        # find next in order node and its parent
+        replace_parent = node.left
+        if replace_parent.right is not None:
+            replace_node = replace_parent.right
+        else:
+            replace_parent = node
+            replace_node = node.left
+
+        # Switch node to delete with next in order node
+        node.data = replace_node.data
+
+        # Remove next in order node
+        if replace_node.is_leaf():
+            # No children
+            self.delete_leaf(data, replace_parent)
+        elif replace_node.left is not None and replace_node.right is not None:
+            # two children
+            self.delete_with_two_children(replace_node)
+        else:
+            # one child
+            self.delete_with_one_child(replace_node, replace_parent)
 
 
 def test_binary_search_tree():
