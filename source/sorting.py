@@ -101,6 +101,17 @@ def merge_sort_recursive(items):
     right_sorted = merge_sort_recursive(items[middle:])
     return merge(left_sorted, right_sorted)
 
+def merge_sort(items):
+    middle = len(items) / 2
+
+    left = items[:middle]
+    right = items[middle:]
+
+    left_sorted = insertion_sort(left)
+    right_sorted = insertion_sort(right)
+
+    return merge(left_sorted, right_sorted)
+
 def main():
     elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
     bubble = bubble_sort(elements)
@@ -125,6 +136,10 @@ def main():
     elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
     merge_rec = merge_sort_recursive(elements)
     print merge_rec
+
+    elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
+    merge = merge_sort(elements)
+    print merge
 
 if __name__ == '__main__':
     main()
