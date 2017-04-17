@@ -65,6 +65,42 @@ def tree_sort(elements):
     bst = BinarySearchTree(elements)
     return bst.items_in_order()
 
+def merge(list1, list2):
+    break_flag = False
+    merged = []
+    i_left = 0
+    i_right = 0
+
+    while break_flag is not True:
+        if i_left < len(list1) and i_right < len(list2):
+            if list1[i_left] <= list2[i_right]:
+                merged.append(list1[i_left])
+                i_left += 1
+            else:
+                merged.append(list2[i_right])
+                i_right += 1
+        elif len(list1) == i_left:
+            for i in xrange(i_right, len(list2)):
+                merged.append(list2[i])
+            break_flag = True
+        elif len(list2) == i_right:
+            for i in xrange(i_left, len(list1)):
+                merged.append(list1[i])
+            break_flag = True
+
+    return merged
+
+
+def merge_sort_recursive(items):
+    if len(items) <= 1:
+        return items
+
+    middle = len(items) / 2
+
+    left_sorted = merge_sort_recursive(items[:middle])
+    right_sorted = merge_sort_recursive(items[middle:])
+    return merge(left_sorted, right_sorted)
+
 def main():
     elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
     bubble = bubble_sort(elements)
@@ -85,6 +121,10 @@ def main():
     elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
     cocktail = cocktail_shaker_sort(elements)
     print cocktail
+
+    elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
+    merge_rec = merge_sort_recursive(elements)
+    print merge_rec
 
 if __name__ == '__main__':
     main()
