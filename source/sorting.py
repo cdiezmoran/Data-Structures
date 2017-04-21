@@ -1,6 +1,7 @@
 #!python
 
 from binarysearchtree import BinarySearchTree
+from heap import MinHeap
 
 def bubble_sort(elements):
     swap = True
@@ -112,34 +113,48 @@ def merge_sort(items):
 
     return merge(left_sorted, right_sorted)
 
+
+def heap_sort(items):
+    heap = MinHeap(items)
+    sorted_list = []
+
+    for i in xrange(len(items)):
+        sorted_list.append(heap.remove_min())
+
+    return sorted_list
+
 def main():
     elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
     bubble = bubble_sort(elements)
-    print bubble
+    print "Bubble: ", bubble
 
     elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
     selection = selection_sort(elements)
-    print selection
+    print "Selection: ", selection
 
     elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
     insertion = insertion_sort(elements)
-    print insertion
+    print "Insertion: ", insertion
 
     elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
     tree_list = tree_sort(elements)
-    print tree_list
+    print "Tree: ", tree_list
 
     elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
     cocktail = cocktail_shaker_sort(elements)
-    print cocktail
+    print "Cocktail: ", cocktail
 
     elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
     merge_rec = merge_sort_recursive(elements)
-    print merge_rec
+    print "Merge_Recursive: ", merge_rec
 
     elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
     merge = merge_sort(elements)
-    print merge
+    print "Merge_Iterative: ", merge
+
+    elements = [3, 6, 2, 4, 9, 1, 5, 7, 8]
+    heap = heap_sort(elements)
+    print "Heap: ", heap
 
 if __name__ == '__main__':
     main()
